@@ -19,6 +19,9 @@ type Word struct {
 //go:embed embed/hiragana.csv
 var hiraganaData string
 
+//go:embed embed/katakana.csv
+var katakanaData string
+
 // Load hiragana from the embedded file.
 func LoadHiragana() ([]Word, error) {
 	var hiraganaWords []Word
@@ -26,19 +29,43 @@ func LoadHiragana() ([]Word, error) {
 	reader := csv.NewReader(strings.NewReader(hiraganaData))
 	reader.Comma = ' '
 
-    records, err := reader.ReadAll()
-    if err != nil {
-    	return hiraganaWords, err
-    }
+	records, err := reader.ReadAll()
+	if err != nil {
+		return hiraganaWords, err
+	}
 
-    for _, record := range(records) {
-    	hiraganaWords = append(hiraganaWords, Word{
-    		record[0],
-    		record[1],
-    		record[2],
-    		record[3],
-    	})
-    }
+	for _, record := range(records) {
+		hiraganaWords = append(hiraganaWords, Word{
+			record[0],
+			record[1],
+			record[2],
+			record[3],
+		})
+	}
 
 	return hiraganaWords, nil
+}
+
+// Load katakana from the embedded file.
+func LoadKatakana() ([]Word, error) {
+	var katakanaWords []Word
+
+	reader := csv.NewReader(strings.NewReader(katakanaData))
+	reader.Comma = ' '
+
+	records, err := reader.ReadAll()
+	if err != nil {
+		return katakanaWords, err
+	}
+
+	for _, record := range(records) {
+		katakanaWords = append(katakanaWords, Word{
+			record[0],
+			record[1],
+			record[2],
+			record[3],
+		})
+	}
+
+	return katakanaWords, nil
 }
