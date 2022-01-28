@@ -14,10 +14,13 @@ func Challenge(words []Word) {
 		fmt.Printf("%v: ", word.Letters)
 		fmt.Scanln(&guess)
 
+		var output string
 		if guess == word.Romaji {
-			fmt.Printf("CORRECT! %v (%v): %v\n", word.Letters, word.Kanji, word.Romaji)
+			output = Green(fmt.Sprintf("%v (%v): %v - %v", word.Letters, word.Kanji, word.Romaji, word.Translation))
 		} else {
-			fmt.Printf("WRONG! %v (%v): %v\n", word.Letters, word.Kanji, word.Romaji)
+			output = Red(fmt.Sprintf("%v (%v): %v - %v", word.Letters, word.Kanji, word.Romaji, word.Translation))
 		}
+
+		fmt.Println(output)
 	}
 }
