@@ -1,4 +1,4 @@
-module github.com/michaelenger/kurikaeshi
+module kurikaeshi
 
 go 1.17
 

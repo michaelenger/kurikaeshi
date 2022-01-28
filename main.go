@@ -4,7 +4,7 @@ Copyright © 2022 NAME HERE <EMAIL ADDRESS>
 */
 package main
 
-import "github.com/michaelenger/kurikaeshi/cmd"
+import "kurikaeshi/cmd"
 
 func main() {
 	cmd.Execute()
