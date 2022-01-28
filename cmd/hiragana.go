@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/michaelenger/kurikaeshi/data"
+	"github.com/michaelenger/kurikaeshi/lib"
 )
 
 // hiraganaCmd represents the hiragana command
@@ -18,7 +18,7 @@ var hiraganaCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		rand.Seed(time.Now().UnixNano())
 
-		hiragana, err := data.LoadHiragana()
+		hiragana, err := lib.LoadHiragana()
 		if err != nil {
 			fmt.Errorf("ERROR: %v", err)
 			os.Exit(1)

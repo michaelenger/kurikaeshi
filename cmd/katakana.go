@@ -8,7 +8,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/michaelenger/kurikaeshi/data"
+	"github.com/michaelenger/kurikaeshi/lib"
 )
 
 // katakanaCmd represents the katakana command
@@ -18,7 +18,7 @@ var katakanaCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		rand.Seed(time.Now().UnixNano())
 
-		katakana, err := data.LoadKatakana()
+		katakana, err := lib.LoadKatakana()
 		if err != nil {
 			fmt.Errorf("ERROR: %v", err)
 			os.Exit(1)

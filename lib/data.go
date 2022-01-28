@@ -1,10 +1,9 @@
-// Package data handles loading data from CSV files.
-package data
+package lib
 
 import (
 	_ "embed"
-	"strings"
 	"encoding/csv"
+	"strings"
 )
 
 // A single word containing either hiragana or katakana letters along with the
@@ -34,7 +33,7 @@ func LoadHiragana() ([]Word, error) {
 		return hiraganaWords, err
 	}
 
-	for _, record := range(records) {
+	for _, record := range records {
 		hiraganaWords = append(hiraganaWords, Word{
 			record[0],
 			record[1],
@@ -58,7 +57,7 @@ func LoadKatakana() ([]Word, error) {
 		return katakanaWords, err
 	}
 
-	for _, record := range(records) {
+	for _, record := range records {
 		katakanaWords = append(katakanaWords, Word{
 			record[0],
 			record[1],
