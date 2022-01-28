@@ -18,14 +18,13 @@ var katakanaCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		rand.Seed(time.Now().UnixNano())
 
-		katakana, err := lib.LoadKatakana()
+		words, err := lib.LoadKatakana()
 		if err != nil {
 			fmt.Errorf("ERROR: %v", err)
 			os.Exit(1)
 		}
 
-		index := rand.Intn(len(katakana))
-		fmt.Printf("%v", katakana[index])
+		lib.Challenge(words)
 	},
 }
 

@@ -18,14 +18,13 @@ var hiraganaCmd = &cobra.Command{
 	Run: func(cmd *cobra.Command, args []string) {
 		rand.Seed(time.Now().UnixNano())
 
-		hiragana, err := lib.LoadHiragana()
+		words, err := lib.LoadHiragana()
 		if err != nil {
 			fmt.Errorf("ERROR: %v", err)
 			os.Exit(1)
 		}
 
-		index := rand.Intn(len(hiragana))
-		fmt.Printf("%v", hiragana[index])
+		lib.Challenge(words)
 	},
 }
 
