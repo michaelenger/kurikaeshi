@@ -41,10 +41,16 @@ func runCommand(cmd *cobra.Command, args []string) error {
 
 	for { // there is no escape
 		word := words[rand.Intn(len(words))]
+		guess = ""
 		wordCounter += 1
 
 		fmt.Printf("%v: ", word.Letters)
 		fmt.Scanln(&guess)
+
+		if guess == "" {
+			wordCounter -= 1
+			break // there is some escape
+		}
 
 		if guess == data.Sanitize(word.Romaji) {
 			output = colors.Green(fmt.Sprintf("%v (%v): %v - %v", word.Letters, word.Kanji, word.Romaji, word.Translation))
@@ -56,7 +62,7 @@ func runCommand(cmd *cobra.Command, args []string) error {
 		fmt.Println(output)
 
 		if wordCount != -1 && wordCounter == wordCount {
-			break // there is some escape
+			break // there is actually a lot of escape
 		}
 	}
 

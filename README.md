@@ -16,6 +16,8 @@ kurikaeshi katakana -n 10
 ```
 
 It will present you with words and you have to write the correct rōmaji version.
+If at any time you want to quit you just need to enter in a blank guess and the
+program will exit.
 
 ![An example of usage](https://github.com/michaelenger/kurikaeshi/blob/master/example.png?raw=true)
 
