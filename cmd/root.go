@@ -77,7 +77,17 @@ func runCommand(cmd *cobra.Command, args []string) error {
 	if wordCounter > 0 {
 		percentage = int(float32(correctWords) / float32(wordCounter) * 100)
 	}
-	fmt.Printf("\nYou got %d/%d words! (%d%%)\n", correctWords, wordCounter, percentage)
+
+	output = fmt.Sprintf("\nYou got %d/%d words! (%d%%)", correctWords, wordCounter, percentage)
+	if percentage > 66 {
+		output = colors.Green(output)
+	} else if percentage > 33 {
+		output = colors.Yellow(output)
+	} else {
+		output = colors.Red(output)
+	}
+
+	fmt.Println(output)
 
 	return nil
 }
