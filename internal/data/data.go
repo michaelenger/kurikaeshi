@@ -1,3 +1,4 @@
+// Package data handles loading the word data.
 package data
 
 import (

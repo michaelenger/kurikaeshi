@@ -1,3 +1,4 @@
+// Package challenge handles the word challenge.
 package challenge
 
 import (

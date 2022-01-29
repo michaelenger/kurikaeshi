@@ -1,3 +1,4 @@
+// Package data handles adding colors to CLI output.
 package colors
 
 import (
