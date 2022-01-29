@@ -11,9 +11,12 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"kurikaeshi/internal/challenge"
+	"kurikaeshi/internal/colors"
 	"kurikaeshi/internal/data"
 )
+
+// Amount of words to test
+var wordCount int
 
 func runCommand(cmd *cobra.Command, args []string) error {
 	rand.Seed(time.Now().UnixNano())
@@ -31,24 +34,46 @@ func runCommand(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
-	challenge.RunChallenge(words)
+	var guess string
+	var output string
+	var currentWord int = 0
+
+	for { // there is no escape
+		word := words[rand.Intn(len(words))]
+		currentWord += 1
+
+		fmt.Printf("%v: ", word.Letters)
+		fmt.Scanln(&guess)
+
+		if guess == data.Sanitize(word.Romaji) {
+			output = colors.Green(fmt.Sprintf("%v (%v): %v - %v", word.Letters, word.Kanji, word.Romaji, word.Translation))
+		} else {
+			output = colors.Red(fmt.Sprintf("%v (%v): %v - %v", word.Letters, word.Kanji, word.Romaji, word.Translation))
+		}
+
+		fmt.Println(output)
+
+		if wordCount != -1 && currentWord == currentWord {
+			break // there is some escape
+		}
+	}
 
 	return nil
 }
 
 func validateArgs(cmd *cobra.Command, args []string) error {
 	if len(args) < 1 {
-		return errors.New("requires a syllabary argument\n")
+		return errors.New("requires a syllabary argument")
 	}
 	if args[0] != "hiragana" && args[0] != "katakana" {
-		return fmt.Errorf("invalid syllabary: %s\n", args[0])
+		return fmt.Errorf("invalid syllabary: %s", args[0])
 	}
 
 	return nil
 }
 
 var rootCmd = &cobra.Command{
-	Use:   "kurikaeshi [syllabary]",
+	Use:   "kurikaeshi <syllabary>",
 	Short: "Learn you Japanese good through repetition",
 	Args:  validateArgs,
 	RunE:  runCommand,
@@ -65,6 +90,8 @@ func Execute() {
 	usageTemplate := strings.Join(newUsageLines, "\n")
 
 	rootCmd.SetUsageTemplate(usageTemplate)
+	rootCmd.Flags().IntVarP(&wordCount, "amount", "n", -1, "Amount of words to test")
+
 	err := rootCmd.Execute()
 	if err != nil {
 		os.Exit(1)

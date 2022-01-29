@@ -4,6 +4,7 @@ package data
 import (
 	_ "embed"
 	"encoding/csv"
+	"regexp"
 	"strings"
 )
 
@@ -15,6 +16,9 @@ type Word struct {
 	Translation string
 	Romaji      string
 }
+
+// Expression used to remove a subword
+var subwordExpression *regexp.Regexp = regexp.MustCompile(`\s+\(.*?\)$`)
 
 //go:embed embed/hiragana.csv
 var hiraganaData string
@@ -68,4 +72,16 @@ func LoadKatakana() ([]Word, error) {
 	}
 
 	return katakanaWords, nil
+}
+
+// Sanitize a word and make it easier to match with.
+func Sanitize(word string) string {
+	var sanitizedWord string
+
+	sanitizedWord = string(subwordExpression.ReplaceAll([]byte(word), []byte("")))
+	sanitizedWord = strings.Replace(sanitizedWord, "-", "", -1)
+	sanitizedWord = strings.Replace(sanitizedWord, "ō", "ou", -1)
+	sanitizedWord = strings.Replace(sanitizedWord, "ū", "uu", -1)
+
+	return sanitizedWord
 }
