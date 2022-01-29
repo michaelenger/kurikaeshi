@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"math/rand"
 	"os"
+	"strconv"
 	"strings"
 	"time"
 
@@ -33,6 +34,12 @@ func runCommand(cmd *cobra.Command, args []string) error {
 	if err != nil {
 		return err
 	}
+
+	wordCountStr := "∞"
+	if wordCount != -1 {
+		wordCountStr = strconv.Itoa(wordCount)
+	}
+	fmt.Printf("ようこそ！ You are guessing %s words!\n (an empty input exits the program)\n\n", wordCountStr)
 
 	var guess string
 	var output string
@@ -88,7 +95,7 @@ func validateArgs(cmd *cobra.Command, args []string) error {
 
 var rootCmd = &cobra.Command{
 	Use:   "kurikaeshi <syllabary>",
-	Short: "Learn you Japanese good through repetition",
+	Short: "繰り返し - Learn you Japanese good through repetition",
 	Args:  validateArgs,
 	RunE:  runCommand,
 }

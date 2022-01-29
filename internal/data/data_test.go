@@ -11,7 +11,7 @@ func TestLoadHiragana(t *testing.T) {
 		t.Fatalf("Unexpected error: %v", err)
 	}
 
-	expectedLength := 428
+	expectedLength := 429
 	if len(result) != expectedLength {
 		t.Fatalf("Incorrect result length %v != %v", len(result), expectedLength)
 	}
