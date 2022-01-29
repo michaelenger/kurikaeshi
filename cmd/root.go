@@ -36,27 +36,35 @@ func runCommand(cmd *cobra.Command, args []string) error {
 
 	var guess string
 	var output string
-	var currentWord int = 0
+	var wordCounter int = 0
+	var correctWords int = 0
 
 	for { // there is no escape
 		word := words[rand.Intn(len(words))]
-		currentWord += 1
+		wordCounter += 1
 
 		fmt.Printf("%v: ", word.Letters)
 		fmt.Scanln(&guess)
 
 		if guess == data.Sanitize(word.Romaji) {
 			output = colors.Green(fmt.Sprintf("%v (%v): %v - %v", word.Letters, word.Kanji, word.Romaji, word.Translation))
+			correctWords += 1
 		} else {
 			output = colors.Red(fmt.Sprintf("%v (%v): %v - %v", word.Letters, word.Kanji, word.Romaji, word.Translation))
 		}
 
 		fmt.Println(output)
 
-		if wordCount != -1 && currentWord == currentWord {
+		if wordCount != -1 && wordCounter == wordCount {
 			break // there is some escape
 		}
 	}
+
+	var percentage int = 0
+	if wordCounter > 0 {
+		percentage = int(float32(correctWords) / float32(wordCounter) * 100)
+	}
+	fmt.Printf("\nYou got %d/%d words! (%d%%)\n", correctWords, wordCounter, percentage)
 
 	return nil
 }
