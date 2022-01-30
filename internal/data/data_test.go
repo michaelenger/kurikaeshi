@@ -57,6 +57,7 @@ func TestSanitize(t *testing.T) {
 		"kanzō":           "kanzou",
 		"sūji":            "suuji",
 		"sobo (obaa-san)": "sobo",
+		"kin'niku":        "kinniku",
 	}
 
 	for test, expected := range tests {

@@ -20,6 +20,9 @@ type Word struct {
 // Expression used to remove a subword
 var subwordExpression *regexp.Regexp = regexp.MustCompile(`\s+\(.*?\)$`)
 
+// Expression used to remove non-word characters
+var nonWordExpression *regexp.Regexp = regexp.MustCompile(`\W`)
+
 //go:embed embed/hiragana.csv
 var hiraganaData string
 
@@ -79,9 +82,9 @@ func Sanitize(word string) string {
 	var sanitizedWord string
 
 	sanitizedWord = string(subwordExpression.ReplaceAll([]byte(word), []byte("")))
-	sanitizedWord = strings.Replace(sanitizedWord, "-", "", -1)
 	sanitizedWord = strings.Replace(sanitizedWord, "ō", "ou", -1)
 	sanitizedWord = strings.Replace(sanitizedWord, "ū", "uu", -1)
+	sanitizedWord = string(nonWordExpression.ReplaceAll([]byte(sanitizedWord), []byte("")))
 
 	return sanitizedWord
 }
