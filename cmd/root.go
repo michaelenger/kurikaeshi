@@ -12,8 +12,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"kurikaeshi/internal/colors"
-	"kurikaeshi/internal/data"
+	"github.com/michaelenger/kurikaeshi/internal/colors"
+	"github.com/michaelenger/kurikaeshi/internal/data"
 )
 
 // Amount of words to test
