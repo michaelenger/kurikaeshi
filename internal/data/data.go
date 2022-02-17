@@ -8,10 +8,10 @@ import (
 	"strings"
 )
 
-// A single word containing either hiragana or katakana letters along with the
+// A single word containing either hiragana or katakana morae along with the
 // kanji for the word, its English translation and the phonetical rōmaji.
 type Word struct {
-	Letters     string
+	Morae       string
 	Kanji       string
 	Translation string
 	Romaji      string

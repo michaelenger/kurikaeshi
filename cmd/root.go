@@ -51,7 +51,7 @@ func runCommand(cmd *cobra.Command, args []string) error {
 		guess = ""
 		wordCounter += 1
 
-		fmt.Printf("%v: ", word.Letters)
+		fmt.Printf("%v: ", word.Morae)
 		fmt.Scanln(&guess)
 
 		if guess == "" {
@@ -60,10 +60,10 @@ func runCommand(cmd *cobra.Command, args []string) error {
 		}
 
 		if guess == data.Sanitize(word.Romaji) {
-			output = colors.Green(fmt.Sprintf("%v (%v): %v - %v", word.Letters, word.Kanji, word.Romaji, word.Translation))
+			output = colors.Green(fmt.Sprintf("%v (%v): %v - %v", word.Morae, word.Kanji, word.Romaji, word.Translation))
 			correctWords += 1
 		} else {
-			output = colors.Red(fmt.Sprintf("%v (%v): %v - %v", word.Letters, word.Kanji, word.Romaji, word.Translation))
+			output = colors.Red(fmt.Sprintf("%v (%v): %v - %v", word.Morae, word.Kanji, word.Romaji, word.Translation))
 		}
 
 		fmt.Println(output)
