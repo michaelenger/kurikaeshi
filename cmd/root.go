@@ -20,7 +20,7 @@ import (
 var wordCount int
 
 func runCommand(cmd *cobra.Command, args []string) error {
-	rand.Seed(time.Now().UnixNano())
+	rand.Seed(time.Now().UnixNano()) // randomise the words
 
 	var words []data.Word
 	var err error
@@ -35,6 +35,8 @@ func runCommand(cmd *cobra.Command, args []string) error {
 		return err
 	}
 
+	registry := data.CreateRegistry(&words)
+
 	wordCountStr := "∞"
 	if wordCount != -1 {
 		wordCountStr = strconv.Itoa(wordCount)
@@ -47,7 +49,7 @@ func runCommand(cmd *cobra.Command, args []string) error {
 	var correctWords int = 0
 
 	for { // there is no escape
-		word := words[rand.Intn(len(words))]
+		word := registry.PickWord()
 		guess = ""
 		wordCounter += 1
 
@@ -61,9 +63,11 @@ func runCommand(cmd *cobra.Command, args []string) error {
 
 		if guess == data.Sanitize(word.Romaji) {
 			output = colors.Green(fmt.Sprintf("%v (%v): %v - %v", word.Morae, word.Kanji, word.Romaji, word.Translation))
+			registry.RegisterSuccess(word)
 			correctWords += 1
 		} else {
 			output = colors.Red(fmt.Sprintf("%v (%v): %v - %v", word.Morae, word.Kanji, word.Romaji, word.Translation))
+			registry.RegisterFailure(word)
 		}
 
 		fmt.Println(output)
